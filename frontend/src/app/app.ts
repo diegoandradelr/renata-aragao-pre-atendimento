@@ -1,7 +1,7 @@
-
 import {
   Component,
   ElementRef,
+  inject,
   signal,
   ViewChild
 } from '@angular/core';
@@ -13,6 +13,8 @@ import {
   Validators
 } from '@angular/forms';
 
+import { SupabaseService } from './services/supabase.service';
+
 @Component({
   selector: 'app-root',
   imports: [ReactiveFormsModule],
@@ -20,6 +22,8 @@ import {
   styleUrl: './app.css'
 })
 export class App {
+  private readonly supabaseService = inject(SupabaseService);
+
   @ViewChild('confirmationCard')
   private confirmationCard?: ElementRef<HTMLElement>;
 
@@ -34,6 +38,8 @@ export class App {
   ]);
 
   protected readonly submitted = signal(false);
+  protected readonly saving = signal(false);
+  protected readonly submitError = signal('');
 
   protected readonly submittedName = signal('');
   protected readonly submittedEmail = signal('');
@@ -113,7 +119,11 @@ export class App {
     return control.invalid && control.touched;
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
+    if (this.saving()) {
+      return;
+    }
+
     if (this.attendanceForm.invalid) {
       this.attendanceForm.markAllAsTouched();
 
@@ -128,26 +138,56 @@ export class App {
 
     const formData = this.attendanceForm.getRawValue();
 
-    this.submittedName.set(formData.name.trim());
-    this.submittedEmail.set(formData.email.trim());
-    this.submittedPhone.set(formData.phone.trim());
-    this.submittedSubject.set(formData.subject);
-    this.submittedMessage.set(formData.message.trim());
+    this.saving.set(true);
+    this.submitError.set('');
 
-    this.submitted.set(true);
+    try {
+      const { error } = await this.supabaseService.client
+        .from('pre_atendimentos')
+        .insert({
+          nome: formData.name.trim(),
+          email: formData.email.trim(),
+          telefone: formData.phone.trim(),
+          assunto: formData.subject,
+          mensagem: formData.message.trim()
+        });
 
-    setTimeout(() => {
-      this.confirmationCard?.nativeElement.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
+      if (error) {
+        throw error;
+      }
+
+      this.submittedName.set(formData.name.trim());
+      this.submittedEmail.set(formData.email.trim());
+      this.submittedPhone.set(formData.phone.trim());
+      this.submittedSubject.set(formData.subject);
+      this.submittedMessage.set(formData.message.trim());
+
+      this.submitted.set(true);
+
+      setTimeout(() => {
+        this.confirmationCard?.nativeElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+
+        this.confirmationCard?.nativeElement.focus();
       });
 
-      this.confirmationCard?.nativeElement.focus();
-    });
+    } catch (error) {
+      console.error('Erro ao salvar pré-atendimento:', error);
+
+      this.submitError.set(
+        'Não foi possível registrar sua solicitação. Verifique sua conexão e tente novamente. Seus dados foram mantidos no formulário.'
+      );
+
+    } finally {
+      this.saving.set(false);
+    }
   }
 
   editRequest(): void {
     this.submitted.set(false);
+    this.submitError.set('');
 
     setTimeout(() => {
       document.getElementById('name')?.focus();
