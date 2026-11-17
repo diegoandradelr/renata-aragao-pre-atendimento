@@ -1,0 +1,390 @@
+
+/* =========================================
+   FORMULÁRIO DE PRÉ-ATENDIMENTO
+========================================= */
+
+.pre-attendance {
+  background: var(--color-bg);
+  padding: 88px 20px;
+}
+
+.form-heading {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.form-heading h2 {
+  font-size: clamp(2rem, 4vw, 2.6rem);
+}
+
+.form-intro {
+  color: var(--color-text-light);
+  text-align: center;
+  margin: 16px auto 0;
+  max-width: 540px;
+}
+
+/* =========================================
+   CARD DO FORMULÁRIO
+========================================= */
+
+.attendance-form {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 760px;
+  margin: 42px auto 0;
+  padding: 42px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(46, 58, 36, 0.07);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.form-field label {
+  color: var(--color-olive-dark);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 50px;
+  padding: 13px 15px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--color-text);
+  font: inherit;
+  font-size: 0.95rem;
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.form-field textarea {
+  min-height: 140px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: #938b7f;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--color-olive);
+  box-shadow: 0 0 0 3px rgba(63, 79, 49, 0.12);
+}
+
+.form-field input[aria-invalid="true"],
+.form-field select[aria-invalid="true"],
+.form-field textarea[aria-invalid="true"] {
+  border-color: #b42318;
+}
+
+.form-field input[aria-invalid="true"]:focus,
+.form-field select[aria-invalid="true"]:focus,
+.form-field textarea[aria-invalid="true"]:focus {
+  box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.1);
+}
+
+.field-error {
+  display: block;
+  color: #b42318;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.field-help {
+  color: var(--color-text-light);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+/* =========================================
+   PRIVACIDADE E CONSENTIMENTO
+========================================= */
+
+.privacy-notice {
+  padding: 22px 24px;
+  margin-top: 2px;
+  background: #e9e6dc;
+  border-left: 4px solid var(--color-olive);
+  border-radius: 6px;
+}
+
+.privacy-notice h3 {
+  margin: 0 0 12px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-olive-dark);
+}
+
+.privacy-notice p {
+  margin: 0 0 10px;
+  color: var(--color-text-light);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+.privacy-notice p:last-child {
+  margin-bottom: 0;
+}
+
+.consent-area {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.consent-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--color-text);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  cursor: pointer;
+}
+
+.consent-label input {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin: 3px 0 0;
+  accent-color: var(--color-olive);
+  cursor: pointer;
+}
+
+/* =========================================
+   BOTÃO DE ENVIO
+========================================= */
+
+.submit-button {
+  width: 100%;
+  min-height: 54px;
+  margin-top: 4px;
+  font: inherit;
+  font-weight: 600;
+}
+
+.form-disclaimer {
+  margin: -8px 0 0;
+  color: var(--color-text-light);
+  font-size: 0.78rem;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* =========================================
+   CONFIRMAÇÃO
+========================================= */
+
+.confirmation-card {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 600px;
+  margin: 30px auto 0;
+  padding: 30px 32px;
+  scroll-margin-top: 125px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(46, 58, 36, 0.07);
+  text-align: center;
+  animation: confirmation-appear 0.35s ease both;
+}
+
+.confirmation-card:focus {
+  outline: 3px solid var(--color-sage);
+  outline-offset: 5px;
+}
+
+.confirmation-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 16px;
+  color: #fff;
+  background: var(--color-olive);
+  border-radius: 50%;
+}
+
+.confirmation-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.confirmation-card h2 {
+  margin: 8px 0 12px;
+  font-size: clamp(1.6rem, 3vw, 2rem);
+}
+
+.confirmation-message {
+  max-width: 460px;
+  margin: 0 auto 20px;
+  color: var(--color-text-light);
+  line-height: 1.6;
+}
+
+.confirmation-details {
+  max-width: 420px;
+  margin: 0 auto 20px;
+  padding: 14px 18px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  text-align: left;
+}
+
+.confirmation-details p {
+  margin: 0 0 7px;
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+.confirmation-details p:last-child {
+  margin-bottom: 0;
+}
+
+.confirmation-details strong {
+  color: var(--color-olive-dark);
+}
+
+.confirmation-whatsapp {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 420px;
+  min-height: 52px;
+  margin: 0 auto;
+}
+
+.edit-button {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 420px;
+  min-height: 48px;
+  margin: 10px auto 0;
+  font: inherit;
+  font-weight: 600;
+}
+
+.confirmation-disclaimer {
+  max-width: 420px;
+  margin: 16px auto 0;
+  color: var(--color-text-light);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+/* =========================================
+   ANIMAÇÃO
+========================================= */
+
+@keyframes confirmation-appear {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================
+   ACESSIBILIDADE
+========================================= */
+
+.attendance-form :focus-visible,
+.confirmation-card a:focus-visible,
+.confirmation-card button:focus-visible {
+  outline: 3px solid var(--color-sage);
+  outline-offset: 3px;
+}
+
+/* =========================================
+   RESPONSIVIDADE
+========================================= */
+
+@media (max-width: 600px) {
+  .pre-attendance {
+    padding: 60px 16px;
+  }
+
+  .attendance-form {
+    padding: 26px 20px;
+    margin-top: 30px;
+    gap: 20px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .privacy-notice {
+    padding: 18px;
+  }
+
+  .confirmation-card {
+    max-width: 100%;
+    padding: 26px 20px;
+    margin-top: 24px;
+  }
+
+  .confirmation-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 14px;
+  }
+
+  .confirmation-card h2 {
+    font-size: 1.6rem;
+  }
+
+  .confirmation-message {
+    margin-bottom: 18px;
+  }
+
+  .confirmation-details {
+    padding: 14px;
+    margin-bottom: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confirmation-card {
+    animation: none;
+  }
+}

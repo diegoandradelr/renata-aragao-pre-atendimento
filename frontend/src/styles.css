@@ -592,3 +592,144 @@ button:focus-visible {
     text-align: center;
   }
 }
+
+
+/* Formulário de pré-atendimento */
+.pre-attendance {
+  padding: 80px 20px;
+}
+
+.pre-attendance form {
+  max-width: 650px;
+  margin: 40px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pre-attendance form > label {
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.pre-attendance input:not([type="checkbox"]),
+.pre-attendance select,
+.pre-attendance textarea {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #d8d3c8;
+  border-radius: 6px;
+  background: #fff;
+  color: #263326;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+.pre-attendance textarea {
+  resize: vertical;
+}
+
+.pre-attendance input:focus,
+.pre-attendance select:focus,
+.pre-attendance textarea:focus {
+  outline: 2px solid #526541;
+  outline-offset: 2px;
+}
+
+.pre-attendance form small {
+  color: #b42318;
+}
+
+.pre-attendance .consent-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-weight: 400;
+  margin: 18px 0;
+}
+
+.pre-attendance .consent-label input {
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+.pre-attendance button {
+  align-self: flex-start;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .pre-attendance {
+    padding: 50px 20px;
+  }
+
+  .pre-attendance button {
+    width: 100%;
+  }
+}
+
+
+/* Seção de privacidade */
+.privacy {
+  padding: 70px 20px;
+}
+
+.privacy .container {
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.privacy h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.privacy p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--color-text-light);
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .privacy {
+    padding: 50px 20px;
+  }
+
+  .privacy p {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+}
+
+
+/* Aviso de privacidade dentro do formulário */
+.privacy-notice {
+  background: #e9e6dc;
+  border-left: 4px solid var(--color-primary);
+  border-radius: 4px;
+  padding: 20px 24px;
+  margin-top: 25px;
+}
+
+.privacy-notice h3 {
+  font-size: 17px;
+  margin: 0 0 12px;
+}
+
+.privacy-notice p {
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 0 0 10px;
+}
+
+.privacy-notice a {
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.privacy-notice + .consent-label {
+  margin-top: 18px;
+}
