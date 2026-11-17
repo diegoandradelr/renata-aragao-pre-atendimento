@@ -1,136 +1,165 @@
-# Renata Aragão — Pré-atendimento Jurídico
+# Renata Aragão Advocacia — Pré-atendimento
 
-MVP de uma plataforma web de pré-atendimento jurídico, desenvolvido para **Renata Aragão Advocacia e Consultoria Jurídica**.
+MVP de uma aplicação web para pré-atendimento jurídico, desenvolvido para **Renata Aragão Advocacia e Consultoria Jurídica**.
 
-O projeto tem como objetivo facilitar o primeiro contato entre potenciais clientes e o escritório, permitindo o preenchimento de um formulário de pré-atendimento, o armazenamento das informações em banco de dados e a continuidade do contato pelo WhatsApp.
+O objetivo é facilitar o primeiro contato entre potenciais clientes e o escritório, permitindo o envio de informações iniciais por meio de um formulário. Os dados são registrados no Supabase e, após a confirmação do envio, o usuário pode continuar o atendimento pelo WhatsApp.
 
-## Funcionalidades
+## Objetivo do projeto
 
-- Página institucional com apresentação do escritório.
-- Seção de áreas de atuação.
-- Seção de dúvidas frequentes (FAQ).
-- Formulário de pré-atendimento com validação dos campos.
-- Validação de consentimento e aviso de privacidade.
-- Armazenamento das solicitações no Supabase.
-- Tela de confirmação após o registro bem-sucedido.
-- Encaminhamento dos dados preenchidos para o WhatsApp.
-- Tratamento de erros durante o envio do formulário.
+Desenvolver uma plataforma web que facilite o processo inicial de atendimento jurídico, centralizando as solicitações recebidas e proporcionando uma experiência simples, acessível e responsiva.
+
+## Funcionalidades implementadas
+
+- Página institucional do escritório.
+- Formulário de pré-atendimento jurídico.
+- Validação dos campos obrigatórios.
+- Validação de e-mail e telefone.
+- Campo de consentimento para envio dos dados.
+- Integração com Supabase para registro das solicitações.
+- Exibição de confirmação após o envio bem-sucedido.
+- Redirecionamento para o WhatsApp com os dados informados.
+- Tratamento de erros durante o envio.
+- Preservação dos dados preenchidos quando ocorre uma falha na comunicação.
+- Layout responsivo.
 
 ## Tecnologias utilizadas
 
-- Angular
-- TypeScript
-- HTML5
-- CSS3
-- Angular Reactive Forms
-- Angular Signals
-- Supabase
-- PostgreSQL
-- Supabase JavaScript Client
-- Git e GitHub
+- **Angular 21** — framework para desenvolvimento da aplicação.
+- **TypeScript** — linguagem de programação.
+- **HTML5** — estrutura da aplicação.
+- **CSS3** — estilização e responsividade.
+- **Angular Reactive Forms** — gerenciamento e validação do formulário.
+- **Angular Signals** — gerenciamento dos estados da interface.
+- **Supabase** — integração com banco de dados.
+- **PostgreSQL** — banco de dados relacional.
+- **Supabase JavaScript Client** — comunicação com o Supabase.
+- **Git e GitHub** — versionamento e hospedagem do código.
 
 ## Arquitetura
 
-O projeto utiliza uma arquitetura monolítica organizada em camadas, mantendo a interface, os serviços e as configurações separados.
+A aplicação utiliza uma arquitetura monolítica em camadas, mantendo a interface e a comunicação com o banco de dados organizadas em responsabilidades distintas.
 
-Estrutura principal:
+A estrutura contempla:
+
+- **Interface:** componentes Angular responsáveis pela apresentação e interação com o usuário.
+- **Formulário:** Angular Reactive Forms para gerenciamento dos campos e validações.
+- **Serviços:** camada responsável pela comunicação com o Supabase.
+- **Banco de dados:** PostgreSQL disponibilizado pelo Supabase.
+
+O serviço `SupabaseService` centraliza a criação do cliente Supabase, evitando que a configuração da conexão fique espalhada pelos componentes.
+
+## Estrutura do projeto
 
 ```text
 renata-aragao-pre-atendimento/
 │
-├── frontend/
-│   ├── public/
-│   ├── src/
-│   │   ├── app/
-│   │   │   ├── services/
-│   │   │   │   └── supabase.service.ts
-│   │   │   ├── app.ts
-│   │   │   ├── app.html
-│   │   │   ├── app.css
-│   │   │   └── app.routes.ts
-│   │   │
-│   │   ├── environments/
-│   │   │   └── environment.ts
-│   │   │
-│   │   ├── index.html
-│   │   ├── main.ts
-│   │   └── styles.css
-│   │
-│   ├── angular.json
-│   ├── package.json
-│   └── tsconfig.json
+├── css/                         # Arquivos CSS do site anterior
+├── images/                      # Imagens do site anterior
+├── js/                           # Arquivos JavaScript do site anterior
+├── index.html                    # Página do site anterior
 │
-└── README.md
+└── frontend/
+    ├── public/
+    ├── src/
+    │   ├── app/
+    │   │   ├── services/
+    │   │   │   └── supabase.service.ts
+    │   │   ├── app.ts
+    │   │   ├── app.html
+    │   │   └── app.css
+    │   │
+    │   ├── environments/
+    │   │   └── environment.ts
+    │   │
+    │   ├── index.html
+    │   ├── main.ts
+    │   └── styles.css
+    │
+    ├── angular.json
+    ├── package.json
+    ├── package-lock.json
+    └── README.md
 ```
 
-## Banco de dados
+A pasta `frontend` contém a aplicação Angular. Os diretórios `css`, `images`, `js` e o arquivo `index.html`, localizados na raiz do repositório, correspondem à versão anterior do site.
 
-A aplicação utiliza o Supabase como serviço de banco de dados, com PostgreSQL.
+## Configuração do Supabase
 
-A tabela `pre_atendimentos` armazena os seguintes campos:
+O projeto utiliza o Supabase para armazenar os dados enviados pelo formulário de pré-atendimento.
 
-| Campo | Tipo |
-|---|---|
-| id | UUID |
-| nome | TEXT |
-| email | TEXT |
-| telefone | TEXT |
-| assunto | TEXT |
-| mensagem | TEXT |
-| created_at | TIMESTAMPTZ |
+### Tabela `pre_atendimentos`
 
-O identificador é gerado automaticamente e a data de criação utiliza o valor padrão `now()`.
+A tabela foi criada no banco PostgreSQL com os seguintes campos:
 
-O acesso à tabela é protegido por Row Level Security (RLS), com uma política de inserção para usuários anônimos. Não foi configurada uma política de leitura pública.
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `id` | uuid | Identificador único, gerado automaticamente |
+| `nome` | text | Nome do solicitante |
+| `email` | text | E-mail do solicitante |
+| `telefone` | text | Telefone para contato |
+| `assunto` | text | Assunto do atendimento |
+| `mensagem` | text | Descrição inicial da solicitação |
+| `created_at` | timestamptz | Data e hora de criação do registro |
 
-## Configuração e execução
+Os campos de identificação e contato são obrigatórios. A data de criação é preenchida automaticamente pelo banco de dados, utilizando o valor padrão `now()`.
 
-### Pré-requisitos
+### Segurança e políticas de acesso
+
+A proteção por Row Level Security (RLS) está habilitada na tabela `pre_atendimentos`.
+
+Foi criada uma política que permite a inserção de registros por usuários anônimos (`anon`), necessária para que o formulário público envie as solicitações.
+
+Não foi criada uma política pública de leitura dos registros.
+
+A aplicação utiliza a chave publicável do Supabase no frontend. A chave secreta ou administrativa (`service_role`) não deve ser utilizada em aplicações executadas no navegador.
+
+As informações coletadas devem ser utilizadas exclusivamente para a finalidade de pré-atendimento, observando os princípios da Lei Geral de Proteção de Dados (LGPD).
+
+Não devem ser enviados documentos ou informações médicas sensíveis pelo formulário inicial.
+
+## Configuração do ambiente
+
+Para executar o projeto localmente, é necessário ter instalado:
 
 - Node.js
 - npm
 - Angular CLI
-- Conta no Supabase
 
-### Instalação
-
-Clone o repositório:
+### 1. Clonar o repositório
 
 ```bash
 git clone https://github.com/diegoandradelr/renata-aragao-pre-atendimento.git
 ```
 
-Entre na pasta do frontend:
+### 2. Acessar a aplicação Angular
 
 ```bash
 cd renata-aragao-pre-atendimento/frontend
 ```
 
-Instale as dependências:
+### 3. Instalar as dependências
 
 ```bash
 npm install
 ```
 
-### Configuração do Supabase
+### 4. Configurar as credenciais do Supabase
 
-Configure o arquivo:
+No arquivo `src/environments/environment.ts`, configure a URL do projeto e a chave publicável:
 
-`src/environments/environment.ts`
-
-Adicione a URL do projeto e a chave publicável do Supabase:
-
-```typescript
+```ts
 export const environment = {
   production: false,
-  supabaseUrl: 'SUA_URL_DO_SUPABASE',
-  supabaseKey: 'SUA_CHAVE_PUBLICAVEL'
+  supabaseUrl: 'SUA_PROJECT_URL',
+  supabaseKey: 'SUA_PUBLISHABLE_KEY'
 };
 ```
 
-Utilize somente a chave publicável no frontend. Nunca exponha chaves secretas ou `service_role` no código do navegador.
+Substitua os valores de exemplo pelas informações disponíveis nas configurações do seu projeto Supabase.
 
-### Executar localmente
+**Importante:** utilize somente a chave publicável no frontend. Nunca coloque a chave secreta ou `service_role` nesse arquivo.
+
+### 5. Executar a aplicação
 
 Dentro da pasta `frontend`, execute:
 
@@ -138,26 +167,66 @@ Dentro da pasta `frontend`, execute:
 ng serve
 ```
 
-A aplicação estará disponível em:
+A aplicação ficará disponível em:
 
-`http://localhost:4200`
+```text
+http://localhost:4200/
+```
 
-## Segurança e privacidade
+## Integração com o Supabase
 
-O formulário apresenta orientações sobre privacidade e solicita consentimento antes do envio.
+A comunicação com o Supabase é realizada por meio do pacote `@supabase/supabase-js`.
 
-O projeto utiliza RLS para controlar o acesso à tabela de pré-atendimentos. As informações coletadas devem ser utilizadas exclusivamente para a finalidade de pré-atendimento, observando os princípios da Lei Geral de Proteção de Dados (LGPD).
+O serviço responsável pela conexão está localizado em:
 
-Não devem ser enviados documentos ou informações médicas sensíveis pelo formulário inicial.
+```text
+src/app/services/supabase.service.ts
+```
+
+O formulário envia os dados para a tabela `pre_atendimentos`.
+
+A confirmação de envio somente é apresentada quando a operação de inserção é concluída sem erros. Caso ocorra uma falha, a aplicação exibe uma mensagem de erro e preserva os dados preenchidos para que o usuário possa tentar novamente.
+
+## Revisão técnica e testes
+
+Durante o desenvolvimento do MVP, foram realizadas verificações manuais das principais funcionalidades.
+
+### Testes realizados
+
+- Validação dos campos obrigatórios do formulário.
+- Validação de e-mail e telefone.
+- Verificação do consentimento para envio.
+- Registro de solicitações no Supabase.
+- Conferência dos dados armazenados na tabela `pre_atendimentos`.
+- Verificação do preenchimento automático da data de criação.
+- Teste de falha de conexão com o navegador em modo offline.
+- Verificação da exibição de mensagens de erro e da preservação dos dados preenchidos.
+- Verificação da apresentação da confirmação após o envio bem-sucedido.
+
+### Considerações técnicas
+
+A aplicação separa a interface da camada de acesso ao Supabase por meio de um serviço dedicado. O formulário utiliza Angular Reactive Forms para gerenciar os campos e suas validações, enquanto os Signals controlam os estados da interface.
+
+O acesso ao banco é controlado por Row Level Security (RLS), com política de inserção para usuários anônimos e sem política pública de leitura.
+
+O tratamento de falhas evita que uma solicitação seja apresentada como concluída quando o banco de dados não confirma a operação.
+
+### Melhorias futuras
+
+- Implementar autenticação administrativa com Supabase Auth.
+- Desenvolver uma área administrativa para consulta e gerenciamento dos pré-atendimentos.
+- Implementar mecanismos adicionais de proteção contra envios automatizados e spam.
+- Ampliar a cobertura de testes automatizados.
+- Aprimorar os recursos de acessibilidade.
+
+## Repositório
+
+Código-fonte disponível no GitHub:
+
+https://github.com/diegoandradelr/renata-aragao-pre-atendimento
 
 ## Status do projeto
 
-MVP em desenvolvimento, com página institucional, formulário de pré-atendimento, integração com Supabase e encaminhamento para WhatsApp implementados.
-
-Funcionalidades administrativas e evoluções futuras poderão ser incorporadas nas próximas etapas.
-
-## Autor
+MVP em desenvolvimento, com formulário de pré-atendimento integrado ao Supabase e registro de solicitações no banco de dados.
 
 Desenvolvido por **Diego Andrade**.
-
-[GitHub](https://github.com/diegoandradelr)
